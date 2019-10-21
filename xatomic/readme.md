@@ -1,0 +1,1 @@
+感谢uber公司，代码拷贝自https://github.com/uber-go/atomic，方便自已加类型，原子变量应该尽量用该包
