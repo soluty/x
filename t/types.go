@@ -1,7 +1,8 @@
 package t
 
 // 主要是方便双层map或者list的书写，单层可用可不用
-
+// 有更加有需要的数据结构，使用https://github.com/emirpasic/gods，注意这里的数据结构都非线程安全
+// 数据结构学习https://visualgo.net/zh
 type Map = map[string]interface{}
 type MapStr = map[string]string
 type MapInt = map[string]int
