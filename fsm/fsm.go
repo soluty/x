@@ -25,7 +25,12 @@ type (
 	CallbackKey string
 	State       string
 	Event       string
+	States      []State
 )
+
+func (s States) GetState() []State {
+	return s
+}
 
 const BeforeAllEvent = CallbackKey("before_")
 const LeaveAllState = CallbackKey("leave_")
@@ -61,10 +66,19 @@ func (s Event) String() string {
 	return string(s)
 }
 
+type Stater interface {
+	GetState() []State
+	// Prefix() string todo 分层状态机
+}
+
+func (s State) GetState() []State {
+	return []State{s}
+}
+
 type (
 	Transition struct {
 		Name Event
-		From State
+		From Stater
 		To   State
 	}
 	LifeCycle struct {
@@ -112,14 +126,16 @@ func New(options *Options, historyMax ...int) *StateMachine {
 	allEvents := make(map[string]bool)
 	allStates := make(map[string]bool)
 	for _, e := range options.Transitions {
-		if _, ok := fsm.transitions[eKey{e.Name, e.From}]; ok {
-			panic("event和src重复")
+		for _, value := range e.From.GetState() {
+			if _, ok := fsm.transitions[eKey{e.Name, value}]; ok {
+				panic("event和src重复")
+			}
+			fsm.transitions[eKey{e.Name, value}] = e.To
+			allStates[value.String()] = true
+			allStates[e.To.String()] = true
+			allEvents[e.Name.String()] = true
+			fsm.addState(value)
 		}
-		fsm.transitions[eKey{e.Name, e.From}] = e.To
-		allStates[e.From.String()] = true
-		allStates[e.To.String()] = true
-		allEvents[e.Name.String()] = true
-		fsm.addState(e.From)
 		fsm.addState(e.To)
 	}
 	for key, value := range options.Callbacks {
@@ -134,6 +150,12 @@ func New(options *Options, historyMax ...int) *StateMachine {
 		}
 	}
 	return fsm
+}
+
+// todo 分层有限状态机
+func (fsm *StateMachine) GetState() []State {
+	//return fsm.current
+	return nil
 }
 
 func (fsm *StateMachine) Fire(event Event, args ...interface{}) (output interface{}, err error) {
