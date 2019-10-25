@@ -5,27 +5,32 @@ import (
 	"reflect"
 )
 
-
-type Indexer interface {
-	Index() int
-}
-
-func RandomByWeight(ids []Indexer, weight []int) Indexer {
+// input->[]type   output->type
+func RandomByWeight(src interface{}, weight []int) interface{} {
 	sum := sum(weight)
 	if sum <= 0 {
 		return nil
 	}
-	length := len(ids)
+	t := reflect.TypeOf(src)
+	if t.Kind() != reflect.Slice && t.Kind() != reflect.Array {
+		panic("RandomByWeight need a slice or array")
+	}
+	v := reflect.ValueOf(src)
+	length := v.Len()
+	if len(weight) != length {
+		panic("weight length must equal to src length")
+	}
 	r := rand.Intn(sum)
 	for i := 0; i < length; i++ {
 		if r < weight[i] {
-			return ids[i]
+			return v.Index(i).Interface()
 		}
 		r -= weight[i]
 	}
 	return nil
 }
 
+// input->[]type   output->[]type
 func Shuffle(src interface{}, srcLen ...int) interface{} {
 	t := reflect.TypeOf(src)
 	switch t.Kind() {
@@ -47,6 +52,7 @@ func Shuffle(src interface{}, srcLen ...int) interface{} {
 	}
 }
 
+// 0 < randLen <= maxSize
 func GetOrderedRandArray(randLen int, maxSize int) []int {
 	if randLen > maxSize {
 		randLen = maxSize
@@ -79,12 +85,10 @@ func GetOrderedRandArray(randLen int, maxSize int) []int {
 	return ret
 }
 
-
-
 func sum(arr []int) int {
 	var sum int
 	for _, i := range arr {
-		sum = sum + (i)
+		sum += i
 	}
 	return sum
 }
