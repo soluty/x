@@ -1,6 +1,6 @@
 module github.com/soluty/x
 
-go 1.12
+go 1.13
 
 require (
 	github.com/alexeyco/simpletable v0.0.0-20191023080658-fe3ac9971811
