@@ -1,8 +1,11 @@
 package xrand
 
 import (
+	"errors"
+	"fmt"
 	"math/rand"
 	"reflect"
+	"time"
 )
 
 // input->[]type   output->type
@@ -83,6 +86,47 @@ func GetOrderedRandArray(randLen int, maxSize int) []int {
 		}
 	}
 	return ret
+}
+
+// 从一个环形中随机取n个点
+func RandomPointsInSquareRing(randCount int, r1, r2 struct {
+	X1 int
+	Y1 int
+	X2 int
+	Y2 int
+}) (points []struct {
+	X int
+	Y int
+}, err error) {
+	if r1.X1 > r2.X1 || r1.Y1 > r2.Y1 || r1.X2 < r2.X2 || r1.Y2 < r2.Y2 {
+		return nil, errors.New("传入坐标参数错误，r1是外圈，r2是内圈")
+	}
+	totalCount := 0
+	candidate := make([]struct {
+		X int
+		Y int
+	}, 0)
+	for i := r1.X1; i <= r1.X2; i++ {
+		for j := r1.Y1; j <= r1.Y2; j++ {
+			if i > r2.X1 && i < r2.X2 && j > r2.Y1 && j < r2.Y2 {
+				continue
+			} else {
+				totalCount++
+				candidate = append(candidate, struct {
+					X int
+					Y int
+				}{X: i, Y: j})
+			}
+		}
+	}
+	if randCount > totalCount {
+		return nil, fmt.Errorf("randCount太大，总共只有%v个可随机的点，传入的randCount=%v", totalCount, randCount)
+	}
+	randIndexes := GetOrderedRandArray(randCount, totalCount)
+	for _, value := range randIndexes {
+		points = append(points, candidate[value])
+	}
+	return
 }
 
 func sum(arr []int) int {
