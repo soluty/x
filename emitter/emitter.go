@@ -8,6 +8,7 @@ import (
 
 const NewListener Event = math.MaxUint32
 const RemoveListener Event = math.MaxUint32 - 1
+const defaultMaxCount = 10
 
 type Event uint
 
@@ -21,28 +22,31 @@ type Emitter struct {
 	maxCount  uint
 }
 
-func New() *Emitter {
-	return &Emitter{
-		listeners: map[Event][]listener{},
-		maxCount:  10,
-	}
-}
-
 func (e *Emitter) SetMaxListeners(n uint) {
 	e.maxCount = n
 }
 
 // 添加 listener 函数到名为 eventName 的事件的监听器数组的末尾。 不会检查 listener 是否已被添加。 多次调用并传入相同的 eventName 与 listener 会导致 listener 会被添加多次。
 func (e *Emitter) On(event Event, callback func(args ...interface{})) *Emitter {
+	if e.listeners == nil {
+		e.listeners = map[Event][]listener{}
+	}
 	e.listeners[event] = append(e.listeners[event], listener{callback: callback})
 	e.Emit(NewListener, callback)
-	if e.maxCount > 0 && len(e.listeners[event]) > int(e.maxCount) {
+	maxCount := int(e.maxCount)
+	if maxCount == 0 {
+		maxCount = defaultMaxCount
+	}
+	if len(e.listeners[event]) > maxCount {
 		log.Println("listener reach maxCount")
 	}
 	return e
 }
 
 func (e *Emitter) Once(event Event, callback func(args ...interface{})) *Emitter {
+	if e.listeners == nil {
+		e.listeners = map[Event][]listener{}
+	}
 	e.listeners[event] = append(e.listeners[event], listener{callback: callback, once: true})
 	e.Emit(NewListener, callback)
 	return e
@@ -55,6 +59,9 @@ func (e *Emitter) Off(event Event, callback func(...interface{})) *Emitter {
 }
 
 func (e *Emitter) removeListenerInternal(event Event, callback func(...interface{}), needEmitRemoveEvent bool) *Emitter {
+	if e.listeners == nil {
+		e.listeners = map[Event][]listener{}
+	}
 	if listeners, ok := e.listeners[event]; !ok {
 		return e
 	} else {
@@ -76,6 +83,9 @@ func (e *Emitter) RemoveAllListeners(events ...Event) *Emitter {
 		e.listeners = map[Event][]listener{}
 		return e
 	}
+	if e.listeners == nil {
+		e.listeners = map[Event][]listener{}
+	}
 	for _, value := range events {
 		if _, ok := e.listeners[value]; ok {
 			delete(e.listeners, value)
@@ -90,6 +100,9 @@ func (e *Emitter) Emit(event Event, args ...interface{}) bool {
 			log.Println("Emitter error:", err)
 		}
 	}()
+	if e.listeners == nil {
+		e.listeners = map[Event][]listener{}
+	}
 	var ret bool
 	for _, l := range e.listeners[event] {
 		if l.once {
