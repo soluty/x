@@ -42,8 +42,8 @@ func (e *Entity) RemoveComponent(name string) *Entity {
 	if !e.HasComponent(name) {
 		return e
 	}
-	delete(e.components, name)
 	e.world.entityRemoveComponent(e, name)
+	delete(e.components, name)
 	return e
 }
 

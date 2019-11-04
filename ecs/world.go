@@ -90,7 +90,7 @@ func (w *World) entityAddComponent(e *Entity, name string) {
 func (w *World) entityRemoveComponent(e *Entity, name string) {
 	for _, group := range w.groupedEntities {
 		// Component已经在group中, e 有所有group中的组件，并且不在value中
-		if containsComponent(group.components, name) {
+		if !containsComponent(group.components, name) {
 			continue
 		}
 		if !e.HasComponents(group.components) {
