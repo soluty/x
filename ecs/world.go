@@ -9,15 +9,18 @@ type World struct {
 	entities        map[uint64]*Entity
 	groupedEntities map[string]*entityGroup // group来访问实体列表, key为所有的group的集合
 
+	systems              []System
+	systemsDirtyEntities []*Entity
+
 	idGen uint64
 	pool  *sync.Pool
 }
 
 func NewWorld() *World {
 	w := &World{
-		entities: map[uint64]*Entity{},
+		entities:        map[uint64]*Entity{},
 		groupedEntities: map[string]*entityGroup{},
-		idGen:    0,
+		idGen:           0,
 	}
 	w.pool = &sync.Pool{
 		New: func() interface{} {
@@ -41,16 +44,16 @@ func (w *World) CreateEntity() *Entity {
 	e.id = id
 	e.components = map[string]Component{}
 	w.entities[id] = e
+	e.setSystemsDirty()
 	return e
 }
 
 func (w *World) RemoveEntity(id uint64) {
 	if entity, ok := w.entities[id]; !ok {
 		return
-	}else {
-		for key, _ := range entity.components {
-			entity.RemoveComponent(key)
-		}
+	} else {
+		entity.RemoveAllComponents()
+		entity.systemsDirty = false
 		w.pool.Put(entity)
 		delete(w.entities, id)
 	}

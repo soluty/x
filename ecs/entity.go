@@ -11,6 +11,9 @@ type Entity struct {
 	world      *World
 	components map[string]Component
 	id         uint64
+
+	systems []string // 哪些system持有该entity的引用
+	systemsDirty bool //
 }
 
 func (e *Entity) ID() uint64 {
@@ -60,6 +63,12 @@ func (e *Entity) HasComponent(name string) bool {
 	return false
 }
 
+// 尝试通过reflect来确定组件
+func (e *Entity) HasComponent2(name string) bool {
+	// reflect.ValueOf(e).FieldByName("")
+	return false
+}
+
 func (e *Entity) HasComponents(names []string) bool {
 	for _, name := range names {
 		if !e.HasComponent(name) {
@@ -69,6 +78,19 @@ func (e *Entity) HasComponents(names []string) bool {
 	return true
 }
 
+func (e *Entity) RemoveAllComponents() {
+	for key := range e.components {
+		e.RemoveComponent(key)
+	}
+}
+
 func (e *Entity) Destroy() {
 	e.world.RemoveEntity(e.id)
+}
+
+func (e *Entity) setSystemsDirty() {
+	if !e.systemsDirty && e.world != nil {
+		e.systemsDirty = true
+		e.world.systemsDirtyEntities = append(e.world.systemsDirtyEntities, e)
+	}
 }

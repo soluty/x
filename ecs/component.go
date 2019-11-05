@@ -1,7 +1,11 @@
 package ecs
 
+import "reflect"
+
+var componentType = reflect.TypeOf((*Component)(nil)).Elem()
+
 type Component interface {
-	Init(name string, o *Entity)
+	Init(name string, e *Entity)
 	Node() *Entity
 	Name() string
 }
@@ -11,9 +15,9 @@ type BaseComponent struct {
 	name string
 }
 
-func (c *BaseComponent) Init(name string, o *Entity) {
+func (c *BaseComponent) Init(name string, e *Entity) {
 	c.name = name
-	c.node = o
+	c.node = e
 }
 
 func (c *BaseComponent) Node() *Entity {
