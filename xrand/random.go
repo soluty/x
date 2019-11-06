@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math/rand"
 	"reflect"
-	"time"
 )
 
 // input->[]type   output->type
@@ -34,24 +33,20 @@ func RandomByWeight(src interface{}, weight []int) interface{} {
 }
 
 // input->[]type   output->[]type
-func Shuffle(src interface{}, srcLen ...int) interface{} {
+func Shuffle(src interface{}) interface{} {
 	t := reflect.TypeOf(src)
 	switch t.Kind() {
-	case reflect.Slice:
-		l := reflect.ValueOf(src).Len()
-		if l <= 1 {
-			return src
-		}
+	case reflect.Slice, reflect.Array:
+		v := reflect.ValueOf(src)
+		l := v.Len()
+		randIndexes := rand.Perm(l)
 		var ret []interface{}
-		for i := l - 1; i >= 0; i-- {
-			v := reflect.ValueOf(src)
-			r := rand.Intn(l - len(ret))
-			ret = append(ret, v.Index(r).Interface())
-			src = reflect.AppendSlice(v.Slice(0, r), v.Slice(r+1, v.Len())).Interface()
+		for i := 0; i < l; i++ {
+			ret = append(ret, v.Index(randIndexes[i]).Interface())
 		}
 		return ret
 	default:
-		panic("Shuffle need a slice params")
+		panic("Shuffle need slice or array params")
 	}
 }
 
