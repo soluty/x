@@ -1,8 +1,10 @@
 package xrand
 
 import (
+	cRand "crypto/rand"
 	"errors"
 	"fmt"
+	"math/big"
 	"math/rand"
 	"reflect"
 )
@@ -130,4 +132,33 @@ func sum(arr []int) int {
 		sum += i
 	}
 	return sum
+}
+
+var maxList = []*big.Int{
+	new(big.Int).SetInt64(10),
+	new(big.Int).SetInt64(100),
+	new(big.Int).SetInt64(1000),
+	new(big.Int).SetInt64(10000),
+	new(big.Int).SetInt64(100000),
+	new(big.Int).SetInt64(1000000),
+	new(big.Int).SetInt64(10000000),
+	new(big.Int).SetInt64(100000000),
+	new(big.Int).SetInt64(1000000000),
+	new(big.Int).SetInt64(10000000000),
+}
+
+func RandNumberString(strLen int) (string, error) {
+	if strLen <= 0 || strLen > len(maxList) {
+		return "", fmt.Errorf("strLen must in [1, %v]", len(maxList))
+	}
+	max := maxList[strLen-1]
+	i, err := cRand.Int(cRand.Reader, max)
+	if err != nil {
+		return "", fmt.Errorf("RandNumberString: %w", err)
+	}
+	x := i.String()
+	for len(x) < strLen {
+		x = "0" + x
+	}
+	return x, nil
 }
