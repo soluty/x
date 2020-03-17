@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+import "gate.proto";
+//import "game.proto";
+import "login.proto";
+
+// protoc -I=/usr/local/include -I=. --twirp_out=. --go_out=. main.proto login.proto gate.proto
+
+// 客户端发给服务器 0-10 gate  10-60000 game 600000-65535 other
+
+enum GameType {
+    Unknown = 0;
+    Poker_Simple = 1;
+    Poker_Ddz = 2;
+    Mahjong_Csmj = 1000;
+}
+
+message Poker {
+    uint32 id = 1;
+    string desc = 2;
+}
+
+message Mahjong {
+    uint32 id = 1;
+    string desc = 2;
+}
+
+message Zipai {
+    uint32 id = 1;
+    string desc = 2;
+}
+
+message Error {
+    int32 code = 1;
+    string message = 2;
+}
+
+// 某个玩家id的手牌变化
+message Data_Shoupai {
+    string playerId = 1;
+    repeated Poker pai = 2;
+}
+
+
+message Game_Poker_Ddz {
+    enum Paixing {
+        Unknown = 0;
+        Dan = 1;
+        Dui = 2;
+        Shun = 3;
+        LianDui = 4;
+        Feiji = 5;
+        LianFei = 6;
+        Zhadan = 7;
+    }
+    // 斗地主_叫分
+    message Jiaofen {
+        int32 fen = 1;
+    }
+    // 斗地主_出牌
+    message Chupai {
+        Paixing paixing = 1;
+        repeated Poker pai = 2;
+    }
+
+    message Shoupai {
+        repeated Data_Shoupai shoupai = 1;
+    }
+}
+
+// 简单游戏，一次只出一张牌
+message Game_Poker_Simple {
+    message Chupai {
+        Poker pai = 1;
+    }
+}
+
+message C2SMsg {
+   // 1-10 gate server
+   // 10-30000 game server
+        //10-100 room msg
+        //100以上  game msg
+   // 30000-32767 other server
+   enum Type {
+       Unknown = 0;
+       Ping = 1;
+       Login = 2; // 登录
+       CreateRoom = 3; // 即使在房间中也能创建房间, 创建并加入由客户端控制
+
+       EnterRoom = 10; // 在房间中不能再加入房间
+       StartGame = 11; //
+       LeaveRoom = 12; //
+
+       Poker_Ddz_Jiaofen = 100; // 叫庄， pass, 1, 2, 3
+       Poker_Ddz_Chupai = 101;  // 斗地主, 出牌
+       Poker_Ddz_Pass = 102;  // 斗地主, 出牌pass
+
+       Poker_Simple_Chupai = 120;  // 简单游戏
+   }
+   int64 cid = 1;
+   Type head = 2;
+   google.protobuf.Any body = 3;
+   string playerId = 4;
+   string roomId = 5;
+
+
+   message EnterRoomReq {
+       string id = 1;
+   }
+   message LeaveRoomReq {
+       string id = 1;
+   }
+}
+
+// 服务端保证 客户端一个cid只回一个包, cid为0的包为服务器主动推送包，一个cid只有一个回包？
+message S2CMsg {
+    // 服务器发给客户端
+    enum Type {
+        Unknown = 0;
+        Confirm = 1;
+        Login = 2;
+    }
+    int64 cid = 1;
+    Type head = 2;
+    google.protobuf.Any body = 3;
+    Error err = 4;
+    string playerId = 5;
+}
+
+
+// 网关服务 长连接
+service Gate {
+    rpc Kick(KickReq) returns (KickRes) {}  // login -> gate  or ctl->gate
+    rpc SendMsg(S2CMsg) returns (google.protobuf.Empty) {} // 网关返回消息给player, 每一个都是一个gorutine,
+}
+
+// 登录服务
+service Login {
+    rpc Login(LoginReq) returns (LoginRes) {} // client -> login
+    rpc LoginAck(LoginAckReq) returns (LoginAckRes) {} // client连接上gate以后给一个登录确认,确认是在gate服务器
+}
+
+// 房间服务
+service Game {
+   rpc ReceiveMsg(C2SMsg) returns (S2CMsg) {} // 怎么保证一个cid的confirm最后到？？ 一个cid起一个channel
+}

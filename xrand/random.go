@@ -32,6 +32,18 @@ func RandomByWeight(src interface{}, weight []int) interface{} {
 	return nil
 }
 
+const ascii = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-=_+"
+
+func RandomString(l int) string {
+	ret := ""
+	r := len(ascii)
+	for i := 0; i < l; i++ {
+		idx := rand.Intn(r)
+		ret += ascii[idx : idx+1]
+	}
+	return ret
+}
+
 // input->[]type   output->[]type
 func Shuffle(src interface{}) interface{} {
 	t := reflect.TypeOf(src)

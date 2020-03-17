@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package pb;
+
+
+
+// gate 网关，和客户端的长连接
+// game 实际房间，和游戏
+// etcd 服务发现

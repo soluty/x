@@ -1,3 +1,32 @@
 **/.DS_Store
 .idea/
 play/
+
+
+51  {"x":3,"y":1,"content":39},{"x":4,"y":2,"content":41},
+56  {"x":1,"y":0,"content":39},{"x":0,"y":1,"content":37},
+62  {"x":6,"y":1,"content":23},{"x":6,"y":2,"content":22},{"x":6,"y":3,"content":21},{"x":6,"y":4,"content":20},{"x":6,"y":6,"content":18},{"x":5,"y":6,"content":17},{"x":0,"y":6,"content":9},
+68  {"x":1,"y":3,"content":13},{"x":4,"y":0,"content":42},{"x":6,"y":0,"content":44},{"x":5,"y":1,"content":46},
+71  {"x":0,"y":0,"content":21},{"x":1,"y":5,"content":47},{"x":2,"y":1,"content":23},{"x":1,"y":1,"content":19},{"x":3,"y":0,"content":26},
+100 {"x":0,"y":5,"content":10},{"x":0,"y":6,"content":8},{"x":1,"y":1,"content":12},
+102 {"x":6,"y":2,"content":57},{"x":6,"y":1,"content":33},{"x":0,"y":7,"content":16},{"x":1,"y":7,"content":15},{"x":2,"y":4,"content":8},{"x":3,"y":3,"content":9},{"x":4,"y":4,"content":11},
+110 {"x":0,"y":7,"content":43},{"x":1,"y":2,"content":37},{"x":1,"y":4,"content":39},{"x":7,"y":6,"content":52},
+117 {"x":1,"y":1,"content":25},{"x":1,"y":2,"content":3},{"x":1,"y":3,"content":2},{"x":2,"y":2,"content":24},{"x":0,"y":7,"content":32},{"x":1,"y":7,"content":33},{"x":2,"y":6,"content":35},{"x":4,"y":3,"content":19},{"x":7,"y":6,"content":46},{"x":6,"y":7,"content":44},{"x":5,"y":6,"content":43},
+119 {"x":5,"y":0,"content":24},{"x":5,"y":1,"content":19},{"x":6,"y":1,"content":20},{"x":7,"y":1,"content":21}, {"x":3,"y":7,"content":56},{"x":4,"y":6,"content":58},{"x":6,"y":5,"content":6},{"x":6,"y":6,"content":2},{"x":7,"y":6,"content":5},{"x":7,"y":7,"content":3},
+125 {"x":0,"y":2,"content":18},{"x":0,"y":3,"content":42},{"x":1,"y":2,"content":41}, {"x":3,"y":2,"content":15},{"x":0,"y":0,"content":20},{"x":7,"y":7,"content":61},{"x":6,"y":6,"content":63},{"x":5,"y":5,"content":64},{"x":5,"y":6,"content":59},
+140 {"x":3,"y":0,"content":5},{"x":4,"y":0,"content":4},{"x":5,"y":0,"content":3},{"x":6,"y":0,"content":16},{"x":7,"y":0,"content":17},{"x":2,"y":1,"content":6},{"x":5,"y":1,"content":15},{"x":6,"y":2,"content":14},{"x":7,"y":2,"content":19},
+143 {"x":2,"y":0,"content":19},{"x":3,"y":0,"content":18},{"x":1,"y":2,"content":16},{"x":1,"y":3,"content":15},{"x":2,"y":6,"content":33},{"x":0,"y":4,"content":26},{"x":1,"y":4,"content":14},{"x":1,"y":5,"content":27},{"x":0,"y":0,"content":22},{"x":0,"y":1,"content":23},{"x":1,"y":1,"content":20},{"x":0,"y":6,"content":30},{"x":1,"y":7,"content":32},{"x":2,"y":4,"content":12},
+149 {"x":0,"y":0,"content":8},{"x":0,"y":1,"content":9},{"x":0,"y":2,"content":10},{"x":0,"y":3,"content":16},{"x":0,"y":4,"content":62},{"x":0,"y":5,"content":63},{"x":0,"y":6,"content":20},{"x":0,"y":7,"content":21},{"x":1,"y":1,"content":11},{"x":1,"y":7,"content":22},
+
+
+// high
+5   {"2":0,"y":0,"content":35},{"3":0,"y":0,"content":36}, {"4":0,"y":0,"content":37}, {"5":0,"y":0,"content":38}, {"6":0,"y":0,"content":39},
+9   {"x":0,"y":0,"content":14},{"x":1,"y":0,"content":13},{"x":2,"y":0,"content":12},{"x":3,"y":0,"content":11},{"x":4,"y":0,"content":26},{"x":5,"y":0,"content":27},{"x":6,"y":0,"content":28},
+32  {"x":0,"y":5,"content":39},{"x":1,"y":6,"content":37},{"x":6,"y":0,"content":23},{"x":7,"y":1,"content":25},{"x":3,"y":2,"content":15},{"x":3,"y":3,"content":47},
+39  {"x":2,"y":2,"content":10},{"x":2,"y":3,"content":2},{"x":4,"y":0,"content":30},
+40  {"x":1,"y":5,"content":22},{"x":2,"y":5,"content":21},{"x":3,"y":5,"content":18},{"x":2,"y":6,"content":17},{"x":3,"y":7,"content":15},
+50  {"x":0,"y":7,"content":49},{"x":0,"y":6,"content":50},{"x":1,"y":7,"content":48},{"x":2,"y":7,"content":47},{"x":4,"y":7,"content":45},{"x":5,"y":7,"content":44},{"x":6,"y":7,"content":43},{"x":7,"y":7,"content":42},
+52  {"x":1,"y":0,"content":30},{"x":2,"y":0,"content":29},{"x":5,"y":0,"content":24},{"x":6,"y":0,"content":22},{"x":7,"y":0,"content":21},{"x":8,"y":0,"content":20},{"x":0,"y":1,"content":32},{"x":0,"y":2,"content":78},{"x":0,"y":3,"content":77},{"x":0,"y":4,"content":40},{"x":0,"y":5,"content":41},{"x":0,"y":6,"content":2},{"x":0,"y":7,"content":43},{"x":0,"y":8,"content":44},
+
+
+{"x":8,"y":4,"content":12},{"x":8,"y":6,"content":14},{"x":7,"y":7,"content":18},{"x":7,"y":8,"content":16},{"x":6,"y":6,"content":19},{"x":6,"y":7,"content":33},

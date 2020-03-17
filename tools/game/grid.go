@@ -147,7 +147,7 @@ func (g *Game) getStartCount() (int, int, bool) {
 }
 
 //deprecated: 时空复杂度太高，只适合求3*3的 利用已知条件求出一个解, 并打印出来, 全排列的算法，只能算3*3的情况
-//func (g *Game) autoSolution() bool {
+//func (g *game) autoSolution() bool {
 //	var validateContents []int
 //	for i := 1; i <= g.size; i++ {
 //		if containsArrIndex(g.initGridContents, i) < 0 {

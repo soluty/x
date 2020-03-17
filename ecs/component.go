@@ -1,9 +1,5 @@
 package ecs
 
-import "reflect"
-
-var componentType = reflect.TypeOf((*Component)(nil)).Elem()
-
 type Component interface {
 	Init(name string, e *Entity)
 	Node() *Entity

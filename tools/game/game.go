@@ -15,18 +15,18 @@ type Game struct {
 	initContents []GridContent
 }
 
-func NewGame(w, h int, initContents []GridContent, holes ...Point) *Game {
+func NewGame(w, h int, holes ...Point) *Game {
 	g := &Game{}
 	g.w = w
 	g.h = h
 	g.holes = holes
 	g.size = w*h - len(holes)
-	g.initContents = initContents
-	g.Reset()
+	//g.Reset()
 	return g
 }
 
-func (g *Game) Reset() {
+func (g *Game) Reset(initContents []GridContent) {
+	g.initContents = initContents
 	w := g.w
 	h := g.h
 	holes := g.holes

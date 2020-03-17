@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package hello;
+
+service Hello {
+    rpc Say(HelloReq) returns (HelloRes) {}
+}
+
+message HelloReq {
+    string name = 1;
+}
+
+message HelloRes {
+    string message = 1;
+}
+
+//type RaftKV interface {
+//    Range(ctx context.Context, r *pb.RangeRequest) (*pb.RangeResponse, error)
+//    Put(ctx context.Context, r *pb.PutRequest) (*pb.PutResponse, error)
+//    DeleteRange(ctx context.Context, r *pb.DeleteRangeRequest) (*pb.DeleteRangeResponse, error)
+//    Txn(ctx context.Context, r *pb.TxnRequest) (*pb.TxnResponse, error)
+//    Compact(ctx context.Context, r *pb.CompactionRequest) (*pb.CompactionResponse, error)
+//}
+//
+//type KVServer interface {
+//    Range(context.Context, *RangeRequest) (*RangeResponse, error)
+//    Put(context.Context, *PutRequest) (*PutResponse, error)
+//    DeleteRange(context.Context, *DeleteRangeRequest) (*DeleteRangeResponse, error)
+//    Txn(context.Context, *TxnRequest) (*TxnResponse, error)
+//    Compact(context.Context, *CompactionRequest) (*CompactionResponse, error)
+//}
+//
+//
+//rpc Range(RangeRequest) returns (RangeResponse)
+//rpc Put(PutRequest) returns (PutResponse)
+//rpc DeleteRange(DeleteRangeRequest) returns (DeleteRangeResponse)
+//
+//KVClient
+
+
+// 登录服务
+service Login {
+    rpc Say(HelloReq) returns (HelloRes) {}
+}
+
+// 每一个大厅是一个 grpc service // 大厅服务 ( )
+service Hall {
+    rpc CreateRoom(CreateRoomReq) returns (CreateRoomRes) {}
+
+}
+
+//
+message CreateRoomReq {
+
+}
+
+message CreateRoomRes {
+
+}

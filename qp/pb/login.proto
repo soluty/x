@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package pb;
+
+// client login gate game
+
+
+enum Platform {
+    Self = 0;
+    Wechat = 1;
+}
+
+// 客户端信息
+message ClientDesc {
+
+}
+
+message LoginReq {
+    Platform platform = 1;
+    string platId = 2;
+    string platKey = 3;
+    ClientDesc platDesc = 4;
+}
+
+message LoginAckReq {
+    string token = 1;
+}
+
+message LoginAckRes {
+
+}
+
+message LoginRes {
+    string uid = 1; // 全局唯一id
+    string gateUrl = 2; // 分配的一个gateUrl,客户端通过gateUrl的ip来连接服务器
+    string token = 3; // 密钥
+}
+
