@@ -13,20 +13,29 @@ func init()  {
 	var _ UserInput = &interactor{}
 }
 
+type Logger interface {
+	Log(...interface{})
+}
+
+// create
+// update
+// delete
+// select
 
 type interactor struct {
+	Logger           Logger
+
 	ProfileOutput ProfileOutput
 	ArticleOutput ArticleOutput
 	TagOutput TagOutput
 	UserOutput UserOutput
 	CommentOutput CommentOutput
 
-	
+	TagRepo TagRepo
+	UserRepo UserRepo
+	CommentRepo CommentRepo
+	ArticleRepo ArticleRepo
 }
 
-
-type Logger interface {
-	Log(...interface{})
-}
 
 
