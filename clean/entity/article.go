@@ -15,3 +15,7 @@ type Article struct {
 	CreatedAt     time.Time // 创建时间
 	UpdatedAt     time.Time // 修改时间
 }
+
+type ArticleList []Article
+
+type ArticleFilter func(Article) bool

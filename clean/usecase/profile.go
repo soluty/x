@@ -7,13 +7,8 @@ type Profile struct {
 	isFollow bool
 }
 
-type ProfileRepo interface {
-}
-
 type ProfileInput interface {
-	// GET /api/profiles/:username
 	ProfileGet(requestingUserName, userName string) error
-	// POST /api/profiles/:username/follow DELETE /api/profiles/:username/follow
 	ProfileUpdateFollow(loggedInUsername, username string, follow bool) error
 }
 

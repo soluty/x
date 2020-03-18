@@ -16,7 +16,14 @@ func init()  {
 
 type interactor struct {
 	ProfileOutput ProfileOutput
+	ArticleOutput ArticleOutput
+	TagOutput TagOutput
+	UserOutput UserOutput
+	CommentOutput CommentOutput
+
+	
 }
+
 
 type Logger interface {
 	Log(...interface{})
