@@ -21,7 +21,11 @@ type CommentRepo interface {
 }
 
 func (i *interactor) CommentsSelect(slug string) error {
-	panic("implement me")
+	article, err := i.ArticleRepo.GetBySlug(slug)
+	if err != nil {
+		return  err
+	}
+	return nil
 }
 
 func (i *interactor) CommentsCreate(userId int, slug, comment string) error {
