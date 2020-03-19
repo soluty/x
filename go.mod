@@ -20,6 +20,7 @@ require (
 	github.com/golang/protobuf v1.3.2
 	github.com/hajimehoshi/ebiten v1.10.3
 	github.com/magicsea/behavior3go v0.0.0-20190816070510-c4fcf60da748
+	github.com/petergtz/pegomock v2.7.0+incompatible
 	github.com/rivo/tview v0.0.0-20200219210816-cd38d7432498 // indirect
 	github.com/rs/xid v1.2.1
 	github.com/sirupsen/logrus v1.4.2

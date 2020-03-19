@@ -43,7 +43,7 @@ func (i *interactor) CommentsDelete(userId int, slug string, id int) error {
 	if err != nil {
 		return err
 	}
-	article.UpdateComments(*comment, false)
+	//article.UpdateComments(*comment, false)
 	if _, err := i.ArticleRepo.Save(*article); err != nil {
 		return err
 	}

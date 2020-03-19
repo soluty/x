@@ -3,13 +3,13 @@ package usecase
 import "github.com/soluty/x/clean/entity"
 
 type ArticleInput interface {
-	ArticlesFeed(username string, limit, offset int) error
-	GetArticles(username string, limit, offset int, filters []entity.ArticleFilter) error
+	ArticlesFeed(userId int, limit, offset int) error
+	ArticlesSelect(userId int, limit, offset int, filters []entity.ArticleFilter) error
 
 	ArticleSelect(slug string, username int) error
-	ArticleCreate(username string, article entity.Article) error
-	ArticleUpdate(username, slug string, newArticle *entity.Article) error
-	ArticleDelete(username, slug string) error
+	ArticleCreate(userId int, article entity.Article) error
+	ArticleUpdate(userId int, slug string, newArticle *entity.Article) error
+	ArticleDelete(userId int, slug string) error
 }
 
 type ArticleOutput interface {
@@ -31,20 +31,19 @@ type ArticleRepo interface {
 	Delete(slug string) error
 }
 
-
-func (i *interactor) ArticlesFeed(username string, limit, offset int) error {
+func (i *interactor) ArticlesFeed(userId int, limit, offset int) error {
 	panic("implement me")
 }
 
-func (i *interactor) GetArticles(username string, limit, offset int, filters []entity.ArticleFilter) error {
+func (i *interactor) ArticlesSelect(userId int, limit, offset int, filters []entity.ArticleFilter) error {
 	panic("implement me")
 }
 
-func (i *interactor) ArticleSelect(slug string, username int) error {
+func (i *interactor) ArticleSelect(slug string, userId int) error {
 	var user *entity.User
-	if username != 0 {
+	if userId != 0 {
 		var err error
-		user, err = i.UserRepo.GetById(username)
+		user, err = i.UserRepo.GetById(userId)
 		if err != nil {
 			return err
 		}
@@ -57,14 +56,14 @@ func (i *interactor) ArticleSelect(slug string, username int) error {
 	return nil
 }
 
-func (i *interactor) ArticleCreate(username string, article entity.Article) error {
+func (i *interactor) ArticleCreate(userId int, article entity.Article) error {
 	panic("implement me")
 }
 
-func (i *interactor) ArticleUpdate(username, slug string, newArticle *entity.Article) error {
+func (i *interactor) ArticleUpdate(userId int, slug string, newArticle *entity.Article) error {
 	panic("implement me")
 }
 
-func (i *interactor) ArticleDelete(username, slug string) error {
+func (i *interactor) ArticleDelete(userId int, slug string) error {
 	panic("implement me")
 }

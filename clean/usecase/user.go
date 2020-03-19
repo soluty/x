@@ -3,19 +3,23 @@ package usecase
 import "github.com/soluty/x/clean/entity"
 
 type UserInput interface {
+	// post /users/login
 	UserCreate(username, email, password string) error
-	UserGet(userName string) error
-	UserEdit(userName string, toUpdate *entity.User) error
-
+	// get /user
+	UserSelect(userId int) error
+	// put /user
+	UserUpdate(userId int, toUpdate *entity.User) error
+	// post /users/login
 	UserLogin(email, password string) error
-	FavoritesUpdate(username, slug string, favortie bool) error
+	// POST|DELETE /articles/:slug/favorite
+	FavoritesUpdate(userId int, slug string, favortie bool) error
 }
 
 type UserOutput interface {
-	UserCreateOp(user *entity.User, token string)
-	UserLoginOp(user *entity.User, token string)
-	UserGetOp(user *entity.User, token string)
-	UserEditOp(user *entity.User, token string)
+	UserLoginOut(user *entity.User)
+	UserCreateOut(user *entity.User)
+	UserSelectOut(user *entity.User)
+	UserUpdateOut(user *entity.User)
 	FavoritesUpdateOp() (*entity.User, *entity.Article)
 }
 
@@ -31,17 +35,36 @@ func (i *interactor) UserCreate(username, email, password string) error {
 }
 
 func (i *interactor) UserLogin(email, password string) error {
-	panic("implement me")
+	user, err := i.UserRepo.GetByEmailAndPassword(email, password)
+	if err != nil {
+		return err
+	}
+	i.UserOutput.UserLoginOut(user)
+	return nil
 }
 
-func (i *interactor) UserGet(userName string) error {
-	panic("implement me")
+func (i *interactor) UserSelect(userId int) error {
+	user, err := i.UserRepo.GetById(userId)
+	if err != nil {
+		return err
+	}
+	i.UserOutput.UserSelectOut(user)
+	return nil
 }
 
-func (i *interactor) UserEdit(userName string, toUpdate *entity.User) error {
-	panic("implement me")
+func (i *interactor) UserUpdate(userId int, toUpdate *entity.User) error {
+	user, err := i.UserRepo.GetById(userId)
+	if err != nil {
+		return err
+	}
+	user.Update(toUpdate)
+	if err := i.UserRepo.Save(*user); err != nil {
+		return err
+	}
+	i.UserOutput.UserUpdateOut(user)
+	return nil
 }
 
-func (i *interactor) FavoritesUpdate(username, slug string, favortie bool) error {
+func (i *interactor) FavoritesUpdate(userId int, slug string, favortie bool) error {
 	panic("implement me")
 }

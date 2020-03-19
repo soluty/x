@@ -8,12 +8,30 @@ type User struct {
 	Name      string    // 昵称
 	Email     string    // 邮箱
 	Password  string    // 密码 不能明文存储
-	Bio       string    // 简介
-	ImageLink string    // 头像链接
+	Bio       *string   // 简介
+	ImageLink *string    // 头像链接
 	Follows   []int     // 关注了哪些用户的id
 	Favorites []Article // 喜欢的文章
 	CreatedAt time.Time // 注册时间
 	UpdatedAt time.Time // 更新时间
+}
+
+func (u *User) Update(user *User) {
+	if user.Name != "" {
+		u.Name = user.Name
+	}
+	if user.Email != "" {
+		u.Email = user.Email
+	}
+	if user.Password != "" {
+		u.Password = user.Password
+	}
+	if user.Bio != nil {
+		u.Bio = user.Bio
+	}
+	if user.ImageLink != nil {
+		u.ImageLink = user.ImageLink
+	}
 }
 
 // u是否关注了id的用户
@@ -43,4 +61,3 @@ func (u *User) UpdateFollowees(followeeId int, follow bool) {
 		u.Follows = nil
 	}
 }
-

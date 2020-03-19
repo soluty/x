@@ -21,7 +21,9 @@ type Logger interface {
 // update
 // delete
 // select
+//
 
+//go:generate pegomock generate --use-experimental-model-gen --output-dir=../adapter/mock --package mock UserRepo
 type interactor struct {
 	Logger           Logger
 
